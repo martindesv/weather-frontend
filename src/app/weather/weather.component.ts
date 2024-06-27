@@ -22,17 +22,5 @@ export class WeatherComponent implements OnInit {
   constructor(private weatherService: WeatherService) { }
 
   ngOnInit(): void {
-    this.fetchPlaces();
-  }
-
-  fetchPlaces(): void {
-    this.weatherService.getAllPlaces().subscribe({
-      next: (places: Place[]) => {
-        this.places = places;
-      },
-      error: (error) => {
-        console.error('Error fetching places:', error);
-      }
-    });
   }
 }

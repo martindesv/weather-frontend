@@ -7,10 +7,20 @@
            matInput
            [formControl]="myControl"
            [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      @for (option of options; track option) {
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      @for (option of filteredOptions | async; track option) {
         <mat-option [value]="option">{{option}}</mat-option>
       }
     </mat-autocomplete>
   </mat-form-field>
 </form>
+
+
+<!--<div *ngIf="selectedPlace">
+  <h3>Details for {{ selectedPlace.name }}</h3>
+  <p><strong>Temperature Min:</strong> {{ selectedPlace.tempmin }}</p>
+  <p><strong>Temperature Max:</strong> {{ selectedPlace.tempmax }}</p>
+  <p><strong>Phenomenon Night:</strong> {{ selectedPlace.phenomenonNight }}</p>
+  <p><strong>Phenomenon Day:</strong> {{ selectedPlace.phenomenonDay }}</p>
+  <p><strong>Date:</strong> {{ selectedPlace.date | date }}</p>
+</div>-->
