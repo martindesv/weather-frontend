@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import {AsyncPipe, DatePipe, NgIf} from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,13 +22,17 @@ import { startWith, map } from 'rxjs/operators';
     ReactiveFormsModule,
     AsyncPipe,
     DatePipe,
+    NgIf,
   ],
 })
 export class PlaceInputComponent implements OnInit {
   myControl = new FormControl('');
+
   places: Place[] = []
 
   filteredOptions!: Observable<Place[]>;
+
+  selectedPlace: Place | null = null;
 
   constructor(private weatherService: WeatherService) { }
 
@@ -59,12 +63,15 @@ export class PlaceInputComponent implements OnInit {
     return this.places.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
-  displayPlace(place: Place): string {
+  displayPlaceData(place: Place): string {
     return place && place.name ? place.name : '';
   }
 
-  /* onSelectionChange(event: any): void {
+  onOptionSelected(event: any): void {
     const selectedPlaceName = event.option.value;
-    this.selectedPlace = this.places.find(place => place.name === selectedPlaceName);
-  } */
+    this.selectedPlace = this.places.find(place => place.name === selectedPlaceName) || null;
+    /* if (this.selectedPlace) {
+      this.displayPlaceData(this.selectedPlace);
+    } */
+  }
 }
