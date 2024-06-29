@@ -26,33 +26,37 @@ import { startWith, map } from 'rxjs/operators';
 })
 export class PlaceInputComponent implements OnInit {
   myControl = new FormControl('');
-  options: string[] = ['One', 'Two', 'Three'];
-  filteredOptions!: Observable<string[]>;
+  places: Place[] = []
+
+  filteredOptions!: Observable<Place[]>;
 
   constructor(private weatherService: WeatherService) { }
 
   ngOnInit() {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value || '')),
-    );
+    this.fetchPlaces();
   }
 
-  /* fetchPlaces(): void {
+  fetchPlaces(): void {
     this.weatherService.getAllPlaces().subscribe({
       next: (places: Place[]) => {
         this.places = places;
+
+        // Initialize filteredOptions after places are fetched
+        this.filteredOptions = this.myControl.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value || '')),
+        );
       },
       error: (error) => {
         console.error('Error fetching places:', error);
       }
     });
-  } */
+  }
 
-  private _filter(value: string): string[] {
+  private _filter(value: string): Place[] {
     const filterValue = value.toLowerCase();
 
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+    return this.places.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
   displayPlace(place: Place): string {
