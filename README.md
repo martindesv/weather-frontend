@@ -10,3 +10,5 @@ ng serve
 ```
 
 http://localhost:4200/
+
+![image](frontend-view.png)
