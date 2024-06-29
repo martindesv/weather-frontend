@@ -1,32 +1,34 @@
-<form class="weather-form">
-  <mat-form-field class="weather-full-width">
-    <mat-label>Place</mat-label>
-    <input type="text"
-           placeholder="Pick one"
-           aria-label="Place"
-           matInput
-           [formControl]="myControl"
-           [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
-      @for (option of filteredOptions | async; track option) {
-        <mat-option [value]="option.name">{{option.name}}</mat-option>
-      }
-    </mat-autocomplete>
-  </mat-form-field>
-</form>
+<div>
+  <form class="weather-form">
+    <mat-form-field class="weather-full-width">
+      <mat-label>Location</mat-label>
+      <input type="text"
+             aria-label="Location"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+        @for (option of filteredOptions | async; track option) {
+          <mat-option [value]="option.name">{{option.name}}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
 
-<div *ngIf="selectedPlace">
-  <h3>{{ selectedPlace.date | date }}</h3>
+  <div *ngIf="selectedPlace" class="parent-div">
+    <h6>{{ selectedPlace.date | date }}</h6>
 
-  <div style="float: left; margin-right: 100px">
-    <h4>Night</h4>
-    <p>{{ selectedPlace.phenomenonNight }}</p>
-    <p>{{ selectedPlace.tempmin }}</p>
-  </div>
+    <div class="columns">
+      <div class="column" style="float: left; margin-right: 100px">
+        <h6>Night</h6>
+        <p>{{ selectedPlace.phenomenonNight }}</p>
+        <h4>{{ selectedPlace.tempmin }}</h4>
+      </div>
 
-  <div>
-    <h4>Day</h4>
-    <p>{{ selectedPlace.phenomenonDay }}</p>
-    <p>{{ selectedPlace.tempmax }}</p>
+      <div class="column">
+        <h6>Day</h6>
+        <p>{{ selectedPlace.phenomenonDay }}</p>
+        <h4>{{ selectedPlace.tempmax }}</h4>
+      </div>
   </div>
 </div>
